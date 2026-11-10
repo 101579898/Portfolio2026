@@ -1,0 +1,207 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:root {
+  --bg: #1e2030;
+  --lavender: #b9a9dc;
+  --pink: #ff9ec4;
+}
+
+body {
+  background: var(--bg);
+  color: #e8e4f5;
+  font-family: "Courier New", monospace;
+  line-height: 1.6;
+}
+
+/* ---------- The TV ---------- */
+
+.tv {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.screen {
+  position: relative;
+  width: min(900px, 100%);
+  aspect-ratio: 16 / 9;
+  background: black;
+  border-radius: 7% / 50%; /* bulging sides, like an old CRT */
+  overflow: hidden;
+}
+
+/* faint scanlines over the screen */
+.screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(transparent 0 2px, rgba(255, 255, 255, 0.05) 2px 3px);
+  pointer-events: none;
+}
+
+/* ---------- Welcome screen ---------- */
+
+.welcome {
+  height: 100%;
+  padding: 0 11%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--lavender);
+  font-family: "Cinzel Decorative", serif;
+}
+
+.welcome p,
+.welcome h1,
+.welcome button {
+  position: relative; /* keeps the text above the flower */
+}
+
+.small-title {
+  align-self: flex-start;
+  font-size: clamp(1rem, 3.5vw, 2.2rem);
+}
+
+.welcome h1 {
+  font-size: clamp(1.2rem, 5vw, 3.2rem);
+  font-weight: normal;
+}
+
+.star {
+  color: white;
+  font-size: 0.6em;
+}
+
+.flower {
+  position: absolute;
+  top: 10%;
+  right: 12%;
+  width: 36%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, #6f7dff, #2a1a8a 40%, transparent 70%);
+  opacity: 0.6;
+}
+
+#start {
+  margin-top: 0.5em;
+  padding: 0.3em 3em;
+  border: none;
+  background: #74719a;
+  color: white;
+  font-family: "Silkscreen", monospace;
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  cursor: pointer;
+}
+
+#start:hover {
+  background: var(--lavender);
+}
+
+/* ---------- Boot screen ---------- */
+
+.boot {
+  height: 100%;
+  padding: 8% 12%;
+  color: var(--pink);
+  text-shadow: 0 0 8px var(--pink);
+  font-family: "Silkscreen", monospace;
+  font-size: clamp(0.5rem, 1.4vw, 0.9rem);
+}
+
+#log {
+  font-family: inherit;
+  white-space: pre-wrap;
+}
+
+.big {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(1.4rem, 6vw, 4rem);
+  animation: blink 0.6s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.4; }
+}
+
+/* ---------- Portfolio ---------- */
+
+.portfolio {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 64px;
+  transform-origin: 50% 50vh;
+  animation: turn-on 0.7s ease-out;
+}
+
+/* the page opens from a thin bright line, like a TV switching on */
+@keyframes turn-on {
+  0%   { transform: scaleY(0.005); filter: brightness(5); }
+  60%  { transform: scaleY(1);     filter: brightness(2); }
+  100% { transform: scaleY(1);     filter: brightness(1); }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: "Silkscreen", monospace;
+}
+
+nav a {
+  margin-left: 16px;
+}
+
+a {
+  color: var(--lavender);
+}
+
+section {
+  margin-top: 72px;
+}
+
+.hero {
+  text-align: center;
+}
+
+.portfolio h1,
+.portfolio h2 {
+  font-family: "Cinzel Decorative", serif;
+  font-weight: normal;
+  color: var(--lavender);
+}
+
+.portfolio h1 {
+  font-size: clamp(2rem, 7vw, 3.5rem);
+}
+
+.portfolio h2 {
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.thumb {
+  aspect-ratio: 1;
+  background: #2c2f48;
+  border: 1px solid var(--lavender);
+  margin-bottom: 8px;
+}
