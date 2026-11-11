@@ -1,207 +1,183 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-[hidden] {
-  display: none !important;
-}
-
+/* ---------- Colors (change these to re-theme) ---------- */
 :root {
-  --bg: #1e2030;
-  --lavender: #b9a9dc;
-  --pink: #ff9ec4;
+  --bg: #0d0410;
+  --pink: #ff8fd0;
+  --purple: #b98cff;
+  --cream: #fff3c4;
 }
+
+* { box-sizing: border-box; margin: 0; }
 
 body {
-  background: var(--bg);
-  color: #e8e4f5;
-  font-family: "Courier New", monospace;
-  line-height: 1.6;
-}
-
-/* ---------- The TV ---------- */
-
-.tv {
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 16px;
-}
-
-.screen {
-  position: relative;
-  width: min(900px, 100%);
-  aspect-ratio: 16 / 9;
   background: black;
-  border-radius: 7% / 50%; /* bulging sides, like an old CRT */
+  color: var(--pink);
+  font-family: "VT323", monospace;
+  font-size: 22px;
+  height: 100vh;
   overflow: hidden;
 }
 
-/* faint scanlines over the screen */
-.screen::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(transparent 0 2px, rgba(255, 255, 255, 0.05) 2px 3px);
-  pointer-events: none;
+.hidden { display: none !important; }
+
+/* ---------- The TV ---------- */
+.tv {
+  position: fixed;
+  inset: 3vmin;
+  background: var(--bg);
+  border-radius: 6% / 50%;          /* curved CRT sides */
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(255, 143, 208, 0.25);
 }
 
-/* ---------- Welcome screen ---------- */
+.screen {
+  position: absolute;
+  inset: 0;
+}
 
-.welcome {
-  height: 100%;
-  padding: 0 11%;
+.scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.3) 3px
+  );
+}
+
+/* ---------- 1. Start screen ---------- */
+#start {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 0.5em;
-  color: var(--lavender);
-  font-family: "Cinzel Decorative", serif;
+  justify-content: center;
+  gap: 30px;
+  background: black;
 }
 
-.welcome p,
-.welcome h1,
-.welcome button {
-  position: relative; /* keeps the text above the flower */
-}
-
-.small-title {
-  align-self: flex-start;
-  font-size: clamp(1rem, 3.5vw, 2.2rem);
-}
-
-.welcome h1 {
-  font-size: clamp(1.2rem, 5vw, 3.2rem);
-  font-weight: normal;
-}
-
-.star {
-  color: white;
-  font-size: 0.6em;
-}
-
-.flower {
-  position: absolute;
-  top: 10%;
-  right: 12%;
-  width: 36%;
-  aspect-ratio: 1;
-  background: radial-gradient(circle, #6f7dff, #2a1a8a 40%, transparent 70%);
-  opacity: 0.6;
-}
-
-#start {
-  margin-top: 0.5em;
-  padding: 0.3em 3em;
-  border: none;
-  background: #74719a;
-  color: white;
-  font-family: "Silkscreen", monospace;
-  font-size: clamp(0.8rem, 2vw, 1.2rem);
+#startBtn {
+  font: inherit;
+  font-size: 26px;
+  padding: 4px 50px;
+  color: black;
+  background: #ddd;
+  border: 3px solid;
+  border-color: white #555 #555 white;   /* old computer button */
   cursor: pointer;
 }
+#startBtn:active { border-color: #555 white white #555; }
 
-#start:hover {
-  background: var(--lavender);
+.blink { animation: blink 1.2s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- 2. Boot screen ---------- */
+#boot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ---------- Boot screen ---------- */
-
-.boot {
-  height: 100%;
-  padding: 8% 12%;
-  color: var(--pink);
-  text-shadow: 0 0 8px var(--pink);
-  font-family: "Silkscreen", monospace;
-  font-size: clamp(0.5rem, 1.4vw, 0.9rem);
-}
-
-#log {
-  font-family: inherit;
-  white-space: pre-wrap;
-}
-
-.big {
+#bootLog {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-size: clamp(1.4rem, 6vw, 4rem);
-  animation: blink 0.6s steps(2) infinite;
+  top: 8%;
+  left: 10%;
+  font: inherit;
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 
-@keyframes blink {
-  50% { opacity: 0.4; }
+#bootTitle {
+  font-size: clamp(40px, 9vw, 110px);
+  font-weight: normal;
+  letter-spacing: 6px;
+  color: #ffd0ea;
+  text-shadow: 0 0 10px var(--pink), 0 0 40px var(--pink);
+  animation: flicker 0.15s infinite;
+}
+@keyframes flicker { 50% { opacity: 0.8; } }
+
+/* ---------- 3. Portfolio ---------- */
+#portfolio {
+  overflow-y: auto;
+  scrollbar-width: none;            /* hide scrollbar so it doesn't cut the curved edge */
+  padding: 7vh 10vw;
+  background: radial-gradient(circle at 70% 20%, #3a1040, var(--bg) 60%);
+  text-shadow: 0 0 8px rgba(255, 143, 208, 0.6);
+  animation: powerOn 0.6s ease-out;
 }
 
-/* ---------- Portfolio ---------- */
-
-.portfolio {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 16px 64px;
-  transform-origin: 50% 50vh;
-  animation: turn-on 0.7s ease-out;
+/* TV turning on: thin bright line that opens up */
+@keyframes powerOn {
+  0%   { transform: scaleY(0.01); filter: brightness(5); }
+  50%  { transform: scaleY(0.01); filter: brightness(5); }
+  100% { transform: scaleY(1);    filter: brightness(1); }
 }
 
-/* the page opens from a thin bright line, like a TV switching on */
-@keyframes turn-on {
-  0%   { transform: scaleY(0.005); filter: brightness(5); }
-  60%  { transform: scaleY(1);     filter: brightness(2); }
-  100% { transform: scaleY(1);     filter: brightness(1); }
-}
-
-header {
+.top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-family: "Silkscreen", monospace;
+  gap: 20px;
+  text-transform: uppercase;
 }
-
-nav a {
-  margin-left: 16px;
-}
-
-a {
-  color: var(--lavender);
-}
-
-section {
-  margin-top: 72px;
-}
+.top p:nth-child(2) { text-align: center; }
+.top p:nth-child(3) { text-align: right; }
 
 .hero {
+  margin: 12vh 0;
   text-align: center;
 }
-
-.portfolio h1,
-.portfolio h2 {
-  font-family: "Cinzel Decorative", serif;
+.hero h1 {
+  font-family: Georgia, serif;
+  font-style: italic;
   font-weight: normal;
-  color: var(--lavender);
+  font-size: clamp(60px, 16vw, 220px);
+  line-height: 0.9;
+  color: var(--cream);
+  text-shadow: 0 0 20px var(--pink), 0 0 60px var(--purple);
+}
+.welcome {
+  font-family: Georgia, serif;
+  font-size: clamp(20px, 3vw, 40px);
 }
 
-.portfolio h1 {
-  font-size: clamp(2rem, 7vw, 3.5rem);
+h2 {
+  font-weight: normal;
+  font-size: 34px;
+  color: var(--purple);
+  margin: 50px 0 20px;
 }
 
-.portfolio h2 {
-  margin-bottom: 16px;
-}
-
-.grid {
+.work {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
-.thumb {
-  aspect-ratio: 1;
-  background: #2c2f48;
-  border: 1px solid var(--lavender);
-  margin-bottom: 8px;
+.card {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--pink);
+  background: linear-gradient(135deg, #2a0a35, #6b2a6e);
+  cursor: pointer;
+}
+.card:hover {
+  background: var(--pink);
+  color: black;
+  text-shadow: none;
+}
+
+.about { max-width: 600px; }
+
+footer {
+  margin-top: 80px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+/* Small screens: stack the header */
+@media (max-width: 600px) {
+  .top { flex-direction: column; }
+  .top p:nth-child(2), .top p:nth-child(3) { text-align: left; }
 }

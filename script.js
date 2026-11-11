@@ -1,39 +1,40 @@
-const tv = document.getElementById("tv");
-const welcome = document.getElementById("welcome");
-const boot = document.getElementById("boot");
-const log = document.getElementById("log");
-const big = document.getElementById("big");
+const startScreen = document.getElementById("start");
+const bootScreen = document.getElementById("boot");
 const portfolio = document.getElementById("portfolio");
+const startBtn = document.getElementById("startBtn");
+const bootLog = document.getElementById("bootLog");
+const bootTitle = document.getElementById("bootTitle");
 
-// The lines that print during the boot. Change these to whatever you like.
-const lines = [
-  "SYSTEM CHECK... OK",
-  "LOADING MEMORY... OK",
-  "LOADING PORTFOLIO.EXE",
-  "FINDING EXAMPLE WORK... 6 FOUND",
-  "AUTO RUN COMPLETE",
+// The text that "types" during boot. Edit these however you like.
+const bootLines = [
+  "system check ............ ok",
+  "loading memory .......... ok",
+  "loading example work .... ok",
+  "data restoration in progress",
+  "booting, please wait...",
 ];
 
-document.getElementById("start").addEventListener("click", function () {
-  // swap the welcome screen for the boot screen
-  welcome.hidden = true;
-  boot.hidden = false;
+startBtn.addEventListener("click", function () {
+  // Swap start screen -> boot screen
+  startScreen.classList.add("hidden");
+  bootScreen.classList.remove("hidden");
 
-  // print one line at a time
+  // Print one line every 400ms
   let i = 0;
   const timer = setInterval(function () {
-    log.textContent += lines[i] + "\n";
-    i++;
-
-    if (i === lines.length) {
+    if (i < bootLines.length) {
+      bootLog.textContent += bootLines[i] + "\n";
+      i++;
+    } else {
       clearInterval(timer);
-      big.hidden = false;               // show the big "BOOTING..."
-      setTimeout(showPortfolio, 1800);  // then open the portfolio
+      bootTitle.classList.remove("hidden"); // big glowing BOOTING...
+      setTimeout(showPortfolio, 1800);
     }
-  }, 350);
+  }, 400);
 });
 
 function showPortfolio() {
-  tv.hidden = true;
-  portfolio.hidden = false;
+  // Swap boot screen -> portfolio (CSS plays the power-on animation)
+  bootScreen.classList.add("hidden");
+  portfolio.classList.remove("hidden");
 }

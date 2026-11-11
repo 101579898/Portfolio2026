@@ -3,74 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kiara's Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Silkscreen&display=swap" rel="stylesheet">
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- THE TV: shown first -->
-  <div id="tv" class="tv">
-    <div class="screen">
+  <div class="tv">
 
-      <!-- Welcome screen -->
-      <div id="welcome" class="welcome">
-        <!-- Placeholder glow. Swap for your flower: <img class="flower" src="flower.png" alt=""> -->
-        <div class="flower"></div>
-        <p class="small-title">Welcome to <span class="star">✦</span></p>
-        <h1><span class="star">✦</span> Kiara's Portfolio</h1>
-        <button id="start">start</button>
+    <!-- 1. START SCREEN (TV is "off") -->
+    <section id="start" class="screen">
+      <p class="blink">NO SIGNAL</p>
+      <button id="startBtn">Start</button>
+    </section>
+
+    <!-- 2. BOOT SCREEN -->
+    <section id="boot" class="screen hidden">
+      <pre id="bootLog"></pre>
+      <h1 id="bootTitle" class="hidden">BOOTING...</h1>
+    </section>
+
+    <!-- 3. PORTFOLIO -->
+    <main id="portfolio" class="screen hidden">
+
+      <header class="top">
+        <p>Your Name<br>(GRAPHIC DESIGN)</p>
+        <p>Instagram: @yourhandle</p>
+        <p>SAY HELLO<br>(you@email.com)</p>
+      </header>
+
+      <div class="hero">
+        <p class="welcome">welcome to my</p>
+        <h1>portfolio</h1>
       </div>
 
-      <!-- Boot screen: shown after pressing start -->
-      <div id="boot" class="boot" hidden>
-        <pre id="log"></pre>
-        <p id="big" class="big" hidden>BOOTING...</p>
+      <h2>&gt; WORK</h2>
+      <div class="work">
+        <div class="card">Example Work</div>
+        <div class="card">Example Work</div>
+        <div class="card">Example Work</div>
+        <div class="card">Example Work</div>
+        <div class="card">Example Work</div>
+        <div class="card">Example Work</div>
       </div>
 
-    </div>
+      <h2>&gt; ABOUT</h2>
+      <p class="about">Example about text. Write a few sentences about yourself here.</p>
+
+      <footer>PORTFOLIO 2026 UPDATE</footer>
+    </main>
+
+    <!-- CRT scanlines on top of everything -->
+    <div class="scanlines"></div>
   </div>
-
-  <!-- THE PORTFOLIO: shown after the boot finishes -->
-  <main id="portfolio" class="portfolio" hidden>
-
-    <header>
-      <span class="logo">✦ Kiara</span>
-      <nav>
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
-
-    <section class="hero">
-      <h1>Hi, I'm Kiara</h1>
-      <p>A short sentence about what you make goes here.</p>
-    </section>
-
-    <section id="work">
-      <h2>My Work</h2>
-      <div class="grid">
-        <div class="card"><div class="thumb"></div><p>Example work</p></div>
-        <div class="card"><div class="thumb"></div><p>Example work</p></div>
-        <div class="card"><div class="thumb"></div><p>Example work</p></div>
-        <div class="card"><div class="thumb"></div><p>Example work</p></div>
-        <div class="card"><div class="thumb"></div><p>Example work</p></div>
-        <div class="card"><div class="thumb"></div><p>Example work</p></div>
-      </div>
-    </section>
-
-    <section id="about">
-      <h2>About</h2>
-      <p>Example about text. Write a few lines about yourself here.</p>
-    </section>
-
-    <section id="contact">
-      <h2>Contact</h2>
-      <p><a href="mailto:you@example.com">you@example.com</a></p>
-    </section>
-
-  </main>
 
   <script src="script.js"></script>
 </body>
